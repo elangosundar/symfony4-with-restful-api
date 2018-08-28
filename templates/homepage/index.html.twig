@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Welcome to Symfony with RestFul API</title>
+    </head>
+    <body>
+        <div id="sidebar">
+            <h1>Symfony4 Home Page</h1>
+        	{% block sidebar %}
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Rest/Users/">Rest API</a></li>
+                </ul>
+            {% endblock %}
+        </div>
+
+        <div id="content">
+           {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

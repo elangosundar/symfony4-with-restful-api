@@ -1,1 +1,4 @@
 
+Rest_controllers:
+    resource: ../../src/Controller/Rest/
+    type: annotation
