@@ -14,3 +14,13 @@
 #        rules:
 #            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
 
+fos_rest:
+    param_fetcher_listener:  true
+    allowed_methods_listener:  true
+    routing_loader: true
+    view:
+        view_response_listener:  true
+    format_listener:
+        rules:
+            - { path: ^/Rest, prefer_extension: false, fallback_format: json, priorities: [ json ] }
+            - { path: ^/, prefer_extension: true, fallback_format: html, priorities: [ html ] }
