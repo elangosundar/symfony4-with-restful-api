@@ -4,13 +4,11 @@
         <meta charset="UTF-8">
         <title>Welcome to User Management Sytems</title>
         {% block head_css %}
-            <!-- Copy CSS from https://getbootstrap.com/docs/4.0/getting-started/introduction/#css -->
             <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         {% endblock %}
 
         {% block head_js %}
-            <!-- Copy JavaScript from https://getbootstrap.com/docs/4.0/getting-started/introduction/#js -->
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -23,11 +21,9 @@
                 {% block sidebar %}
                     <nav>
                         <ul>
-                            <li><a href="/">Home</a></li> |
-                            <li><a href="/Rest/Users/getUser">getUser</a></li> |
-                            <li><a href="/Rest/Users/">getAllUsers</a></li> |
-                            <li><a href="/Rest/Users/newUser">New</a></li> |
-                            <li><a href="/">Edit</a></li>
+                            <li><a href="/" target="_blank" >Home</a></li> | 
+                            <li><a href="/users/" target="_blank">User Management</a></li> |
+                            <li><a href="/Rest/users/" target="_blank">Rest API</a></li>
                         </ul>
                     </nav>
                 {% endblock %}
@@ -47,10 +43,14 @@
                                 <th>BloodGroup</th>
                                 <th>Gender</th>
                                 <th>Blood Group</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                         {% for user in userlist %}
+                            <!-- {{dump(user)}} -->
                             <tr>
                                 <td>{{ user.userFirstName }}</td>
                                 <td>{{ user.userLastName }}</td>
@@ -65,9 +65,7 @@
                                     {% endfor %}
                                 </td>
                                 <td>
-                                    <!-- {{dump(user.userEducation)}} -->
                                     {% for usrEdu in user.userEducation %}
-                                        <!--  {{dump(usrEdu)}} -->
                                         {% if usrEdu %}
                                             <!-- handle array -->
                                             {% for edu in usrEdu %}
@@ -83,6 +81,9 @@
                                 <td>{{ user.userBloodGroup }}</td>
                                 <td>{{ user.userGender }}</td>
                                 <td>{{ user.userBloodGroup }}</td>
+                                <td><a href="/Rest/users/{{ user.id }}" target="_blank">View</a></td>
+                                <td><a href="/Rest/users/{{ user.id }}" target="_blank">Edit</a></td>
+                                <td><a href="/Rest/users/{{ user.id }}" target="_blank">Delete</a></td>                                
                             </tr> 
                         {% endfor %}
                         </tbody>

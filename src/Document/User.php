@@ -1,4 +1,8 @@
 <?php
+/*
+ * Create User class document for MongoDB
+ * Author : Elangovan.Sundar
+ */
 
 namespace App\Document;
 
@@ -60,6 +64,15 @@ class User
      */
     protected $create_date;
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
     
     public function setUserFirstName($userFirstName)
     {

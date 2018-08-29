@@ -6,22 +6,30 @@ index:
     path: /
     controller: App\Controller\HomePageController::index
 
-app_HomePage_number:
-    path: /HomePage/number
-    controller: App\Controller\HomePageController::number
+#app_HomePage_number:
+    #path: /HomePage/number
+    #controller: App\Controller\HomePageController::number
 
 #app_Rest_HomePage_index:
     #path: /Rest/User/
     #controller: App\Controller\Rest\UserController::index
 
-app_Rest_HomePage_getUserAction:
-    path: /Rest/Users/getUser
-    controller: App\Controller\Rest\UserController::getUserAction
+#app_Rest_HomePage_getUserAction:
+    #path: /Rest/Users/getUser
+    #controller: App\Controller\Rest\UserController::getUserAction
 
-app_Rest_HomePage_getAllUsersAction:
-    path: /Rest/Users/
-    controller: App\Controller\Rest\UserController::getAllUsersAction
+#app_Rest_HomePage_getAllUsersAction:
+    #path: /Rest/Users/
+    #controller: App\Controller\Rest\UserController::getAllUsersAction
 
-app_Rest_HomePage_newUserAction:
-    path: /Rest/Users/newUser
-    controller: App\Controller\Rest\UserController::newUserAction
+#users:
+    #path:     /Rest/users/
+    #controller: App\Controller\Rest\UserController::getAllUsersAction
+
+#users_getbyid:
+    #path:     /Rest/users/{slug}
+    #controller: App\Controller\Rest\UserController::getUserAction
+
+#users_new:
+    #path: /Rest/users/new
+    #controller: App\Controller\Rest\UserController::newUserAction
