@@ -31,7 +31,7 @@ class UserController extends FOSRestController
     /**
      * Matches /Rest/users/{id}
      * 
-     * @Route("/Rest/users/{id}", requirements={"id"="\d+"})
+     * @Route("/Rest/users/{id}")
      * @Method("GET")
      * Method will used for Showing the user based on ID for REST
      */
@@ -97,23 +97,5 @@ class UserController extends FOSRestController
             $dm->flush();
         }
         return View::create($user, Response::HTTP_CREATED , []);   
-    }
-
-    /**
-     * Matches /users
-     *
-     * @Route("/users")
-     * @Method("GET")
-     * Method will used for showing the userlist
-     */
-
-    public function getManageUsersAction()
-    {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repository = $dm->getRepository(User::class);
-        $users = $repository->findAll();        
-        $dm->flush();
-
-        return $this->render('rest/users.html.twig', array("userlist" => $users));
-    }
+    }   
 }
