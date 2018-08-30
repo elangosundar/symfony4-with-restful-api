@@ -33,3 +33,7 @@ index:
 #users_new:
     #path: /Rest/users/new
     #controller: App\Controller\Rest\UserController::newUserAction
+
+users:
+    path:     /users
+    controller: App\Controller\UserController::getManageUsersAction

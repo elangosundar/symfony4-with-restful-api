@@ -12,3 +12,13 @@ ul {
 li {
     display: inline;
 }
+
+#form div label {
+    width: 300px;
+}
+
+.UserAddForm .form-control {
+    display: inline !important;
+    width: 60% !important;
+    margin-bottom: 10px;
+}
