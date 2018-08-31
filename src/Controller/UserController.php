@@ -114,14 +114,25 @@ class UserController extends Controller
      * Method will used for showing the userlist
      */
 
-    public function getManageUsersAction()
+    public function getManageUsersAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
         $repository = $dm->getRepository(User::class);
-        $users = $repository->findAll();        
+        $users = $repository->findAll();
         $dm->flush();
 
-        return $this->render('users.html.twig', array("userlist" => $users));
+        /* Pagination Functionality */
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $dm->getRepository(User::class)->findAll(), //query
+            $request->query->getInt('page', 1), //default page
+            2 //limit per page
+        );
+
+        return $this->render('users.html.twig', array(
+            "userlist" => $pagination,
+            "pagination" => $pagination
+        ));
     }
 
     /**
