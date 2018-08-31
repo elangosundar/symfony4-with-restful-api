@@ -23,7 +23,8 @@
                         <ul>
                             <li><a href="/" target="_blank" >Home</a></li> | 
                             <li><a href="/users/" target="_blank">User Management</a></li> |
-                            <li><a href="/Rest/users/" target="_blank">Rest API</a></li>
+                            <li><a href="/Rest/users/" target="_blank">Rest API</a></li> |
+                            <li><a href="/users/new" target="_blank">Add User</a></li>
                         </ul>
                     </nav>
                 {% endblock %}
@@ -80,6 +81,17 @@
                         {% endfor %}
                         </tbody>
                     </table>
+
+                    <div class="navigation">
+                       {{ knp_pagination_render(pagination, null, {}, {
+                            'align' : 'center',
+                            'position': 'centered',
+                            'size': 'large',
+                            'rounded': true
+                            })
+                        }}
+                    </div>
+
                 {% endblock %}
             </div>
         </div>

@@ -11,6 +11,7 @@
         "doctrine/mongodb-odm-bundle": "^3.4",
         "friendsofsymfony/rest-bundle": "^2.4",
         "jenssegers/mongodb": "^3.4",
+        "knplabs/knp-paginator-bundle": "^2.8",
         "mongodb/mongodb": "^1.0.1",
         "nelmio/cors-bundle": "^1.5",
         "sensio/framework-extra-bundle": "^5.2",
