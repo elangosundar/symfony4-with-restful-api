@@ -8,6 +8,8 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @MongoDB\Document
@@ -22,6 +24,7 @@ class User
     /**
      * @MongoDB\Field(type="string")
      */
+
     protected $userFirstName;
 
     /**
@@ -40,7 +43,7 @@ class User
     protected $userMobileNumber;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="date")
      */
     protected $userDateofBirth;
 
@@ -96,7 +99,7 @@ class User
     
     public function setUserEmail($userEmail)
     {
-        $this->userEmail = $userEmail;
+        $this->userEmail = explode(',', $userEmail);
     }
 
     public function getUserEmail()
@@ -106,7 +109,7 @@ class User
 
     public function setUserMobileNumber($userMobileNumber)
     {
-        $this->userMobileNumber = $userMobileNumber;
+        $this->userMobileNumber = explode(',', $userMobileNumber);
     }
 
     public function getUserMobileNumber()
@@ -116,7 +119,7 @@ class User
 
     public function setUserDateofBirth($userDateofBirth)
     {
-        $this->userDateofBirth = $userDateofBirth;
+        $this->userDateofBirth = $userDateofBirth->format('Y-m-d H:i:s');
     }
 
     public function getUserDateofBirth()

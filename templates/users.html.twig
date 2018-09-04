@@ -43,7 +43,6 @@
                                 <th>DOB</th>
                                 <th>BloodGroup</th>
                                 <th>Gender</th>
-                                <th>Blood Group</th>
                                 <th>View</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -70,10 +69,9 @@
                                        <p>{{ usrEdu }}</p>
                                     {% endfor %}
                                 </td>
-                                <td>{{ user.userDateofBirth }}</td>
+                                <td>{{ user.userDateofBirth.date }}</td>
                                 <td>{{ user.userBloodGroup }}</td>
                                 <td>{{ user.userGender }}</td>
-                                <td>{{ user.userBloodGroup }}</td>
                                 <td><a href="/Rest/users/{{ user.id }}" target="_blank">View</a></td>
                                 <td><a href="/users/edit/{{ user.id }}" target="_blank">Edit</a></td>
                                 <td><a href="/users/delete/{{ user.id }}" target="_blank">Delete</a></td>                                
