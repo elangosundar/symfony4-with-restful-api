@@ -15,7 +15,7 @@
         {% endblock %}      
     </head>
     <body>
-        <div class="main">
+        <div class="main container">
             <div id="sidebar">
                 <h1>User Management Sytems - Add User Form</h1>
                 {% block sidebar %}
@@ -30,17 +30,158 @@
             </div>
 
             <div id="content">
-                {% block body %}
+                <div class="table-responsive">
+                    {% block body %}
+
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userFirstName) }}
+                        </div>
+                        <div class="col-md-7">
+                        {{ form_widget(form.userFirstName) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userLastName) }}
+                        </div>
+                        <div class="col-md-7">
+                        {{ form_widget(form.userLastName) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userDateofBirth) }}
+                        </div>
+                        <div class="col-md-7">
+                        {{ form_widget(form.userDateofBirth) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userBloodGroup) }}
+                        </div>
+                        <div class="col-md-7">
+                        {{ form_widget(form.userBloodGroup) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userGender) }}
+                        </div>
+                        <div class="col-md-7">
+                        {{ form_widget(form.userGender) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userEmail) }}
+                        </div>
+                        <div class="col-md-7">
+                            <ul id="email-fields-list"
+                                data-prototype="{{ form_widget(form.userEmail.vars.prototype)|e }}">
+                                {% for emailField in form.userEmail %}
+                                    <li>
+                                        {{ form_errors(emailField) }}
+                                        {{ form_widget(emailField) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="#" id="add-another-email" class="btn btn-success btn-md">Add Email</a>
+                        </div>
+                    </div>
                     
+                   <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userMobileNumber) }}
+                        </div>
+                        <div class="col-md-7">
+                            <ul id="mobile-fields-list"
+                                data-prototype="{{ form_widget(form.userMobileNumber.vars.prototype)|e }}">
+                                {% for emailField in form.userMobileNumber %}
+                                    <li>
+                                        {{ form_errors(emailField) }}
+                                        {{ form_widget(emailField) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="#" id="add-another-mobile" class="btn btn-success btn-md">Add Mobile Number</a>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        {{ form_label(form.userEducation) }}
+                        </div>
+                        <div class="col-md-7">
+                            <ul id="edu-fields-list"
+                                data-prototype="{{ form_widget(form.userEducation.vars.prototype)|e }}">
+                                {% for emailField in form.userEducation %}
+                                    <li>
+                                        {{ form_errors(emailField) }}
+                                        {{ form_widget(emailField) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="#" id="add-another-edu" class="btn btn-success btn-md">Add Education</a>
+                        </div>
+                    </div>               
 
-                   {{ form_start(form, {attr: {class: 'UserAddForm',role : 'form'} }) }}
-                        {{ form_widget(form) }}
-                       
-
-                        <input type="submit" class="btn btn-primary" />
-                    {{ form_end(form) }}
-                {% endblock %}
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-primary" /> 
+                    </div>   
+                    {% endblock %}
+                </div>
             </div>
         </div>
     </body>
 </html>
+<script type="text/javascript">
+    var emailCount  = '{{ form.userEmail|length }}';
+    var mobileCount = '{{ form.userMobileNumber|length }}';
+    var eduCount    = '{{ form.userEducation|length }}';
+
+    jQuery(document).ready(function() {
+        jQuery('#add-another-email').click(function(e) {
+            e.preventDefault();
+
+            var emailList = jQuery('#email-fields-list');
+
+            var newWidget = emailList.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, emailCount);
+            emailCount++;
+
+            var newLi = jQuery('<li></li>').html(newWidget);
+            newLi.appendTo(emailList);
+        });
+        jQuery('#add-another-mobile').click(function(e) {
+            e.preventDefault();
+
+            var mobileList = jQuery('#mobile-fields-list');
+
+            var newWidget = mobileList.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, mobileCount);
+            mobileCount++;
+
+            var newLi = jQuery('<li></li>').html(newWidget);
+            newLi.appendTo(mobileList);
+        });
+        jQuery('#add-another-edu').click(function(e) {
+            e.preventDefault();
+
+            var eduList = jQuery('#edu-fields-list');
+
+            var newWidget = eduList.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, eduCount);
+            eduCount++;
+
+            var newLi = jQuery('<li></li>').html(newWidget);
+            newLi.appendTo(eduList);
+        });
+    });
+</script>

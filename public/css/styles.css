@@ -22,3 +22,15 @@ li {
     width: 60% !important;
     margin-bottom: 10px;
 }
+
+#user div label {
+    width: 200px;
+}
+
+.custom-textbox{
+    padding-left:198px;
+}
+
+.remove_field{
+    margin-left:10px;
+}

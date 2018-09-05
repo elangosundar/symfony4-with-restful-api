@@ -67,6 +67,17 @@ class User
      */
     protected $create_date;
 
+    /**
+     * @MongoDB\Field(type="simple_array")
+     */
+    protected $emails;
+
+    /*public function __construct()
+    {
+        parent::__construct();
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
+    }*/
+
     public function setId($id)
     {
         $this->id = $id;
@@ -97,6 +108,44 @@ class User
         return $this->userLastName;
     }
     
+    /**
+     * Add an email to the collection of emails
+     *
+     * @param string $email The email to add.
+     *
+     * @return User
+     */
+    public function addEmail($email)
+    {
+        $this->emails[] = $email;
+
+        return $this;
+    }
+
+    /**
+     * Remove an email from the collection of emails
+     *
+     * @param string $email The email to disassociate from this user.
+     *
+     * @return User
+     */
+    public function removeEmail($email)
+    {
+        $this->email->removeElement($email);
+
+        return $this;
+    }
+
+    /**
+     * Get all emails in colletion
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmails()
+    {
+        return $this->emails;
+    }
+
     public function setUserEmail($userEmail)
     {
         $this->userEmail = explode(',', $userEmail);
@@ -104,7 +153,8 @@ class User
 
     public function getUserEmail()
     {
-        return $this->userEmail;
+        //return $this->userEmail;
+        return $this->emails;
     }
 
     public function setUserMobileNumber($userMobileNumber)

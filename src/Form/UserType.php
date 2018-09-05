@@ -21,13 +21,15 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $educationArray = [     
+        $educationArray = [
             'UG College' => 'UG College',
             'PG College' => 'PG College',
             'Masters College' => 'Masters College',
@@ -43,21 +45,39 @@ class UserType extends AbstractType
             ->add('userLastName', TextType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
-            ->add('userEmail', EmailType::class, array(
-                'attr' => array('class' => 'form-control')
-            ))
-            ->add('userMobileNumber', IntegerType::class, array(
-               'attr' => array('class' => 'form-control')
-            ))
+            ->add('userEmail', CollectionType::class, 
+            [
+                'entry_type' => EmailType::class,
+                'allow_add'  => true,
+                'allow_delete'  => true,
+                'entry_options' => array(
+                    'attr' => array('class' => 'email-box form-control'),
+                ),
+            ])
+            ->add('userMobileNumber', CollectionType::class, 
+            [
+                'entry_type' => EmailType::class,
+                'allow_add'  => true,
+                'allow_delete'  => true,
+                'entry_options' => array(
+                    'attr' => array('class' => 'form-control'),
+                ),
+            ])
             ->add('userDateofBirth', DateType::class, array(
                 'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
                 
             ))
-            ->add('userEducation',ChoiceType::class,array(
-                'choices' => $educationArray, 'multiple' => true, 'attr' => array('class' => 'form-control')
-            ))
+            ->add('userEducation', CollectionType::class, 
+            [
+                'entry_type' => EmailType::class,
+                'allow_add'  => true,
+                'allow_delete'  => true,
+                'entry_options' => array(
+                    'attr' => array('class' => 'form-control'),
+                ),
+            ])
             ->add('userBloodGroup', TextType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
