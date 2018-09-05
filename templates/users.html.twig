@@ -15,7 +15,8 @@
         {% endblock %}      
     </head>
     <body>
-        <div class="main">
+
+        <div class="main container">
             <div id="sidebar">
                 <h1>User Management Sytems</h1>
                 {% block sidebar %}
@@ -32,6 +33,7 @@
 
             <div id="content">
                 {% block body %}
+                <div class="table-responsive">
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                             <tr>
@@ -89,7 +91,7 @@
                             })
                         }}
                     </div>
-
+                </div>
                 {% endblock %}
             </div>
         </div>

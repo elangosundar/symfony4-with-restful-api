@@ -42,12 +42,13 @@ class UserController extends Controller
     public function newUserAction(Request $request, ValidatorInterface $validator)
     {
         $user = new User();
-        $form = $this->createForm(UserType::Class,$user);         
+        $form = $this->createForm(UserType::Class,$user);   
+        //$form->remove('userLastName');
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-
             $errors = $validator->validate($user);
             if (count($errors) > 0) {    
                 $errorsString = (string) $errors;
