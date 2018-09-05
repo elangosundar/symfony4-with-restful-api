@@ -13,15 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
+
+use App\Form\UserType;
 
 class UserController extends Controller
 {
@@ -40,65 +39,25 @@ class UserController extends Controller
      * Method will used for creating the new user
      */
 
-    public function newUserAction(Request $request)
+    public function newUserAction(Request $request, ValidatorInterface $validator)
     {
-        $educationArray = [
-            
-            'UG College' => 'UG College',
-            'PG College' => 'PG College',
-            'Masters College' => 'Masters College',
-            'Others College' => 'Others College',
-       ];
-
-        $form = $this->createFormBuilder()
-            ->add('userFirstName', TextType::class, array(
-                'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control')
-            ))
-            ->add('userLastName', TextType::class, array(
-                'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control')
-            ))
-            ->add('userEmail', TextType::class, array(
-                'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control')
-            ))
-            ->add('userMobileNumber', TextType::class, array(
-                'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control')
-            ))
-            ->add('userDateofBirth', TextType::class, array(
-                'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control')
-            ))
-            ->add('userEducation',ChoiceType::class,array(
-                'choices' => $educationArray, 'multiple' => true, 'attr' => array('class' => 'form-control')
-            ))
-            ->add('userBloodGroup', TextType::class, array(
-                'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control')
-            ))
-            ->add('userGender', TextType::class, array(
-                'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control')
-            ))
-            ->getForm();
-
+        $user = new User();
+        $form = $this->createForm(UserType::Class,$user);         
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            $user = $form->getData();
 
-            $userEmailArray  = explode(",",$data['userEmail']);
-            $userMobileArray = explode(",",$data['userMobileNumber']);
-
-            $user = new User();
-            $user->setUserFirstName($data['userFirstName']);
-            $user->setUserLastName($data['userLastName']);
-            $user->setUserEmail($userEmailArray);
-            $user->setUserMobileNumber($userMobileArray);
-            $user->setUserDateofBirth($data['userDateofBirth']);
-            $user->setUserEducation($data['userEducation']);
-            $user->setUserBloodGroup($data['userBloodGroup']);
-            $user->setUserGender($data['userGender']);
-
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $dm->persist($user);
-            $dm->flush();
-            return $this->redirectToRoute('users');
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {    
+                $errorsString = (string) $errors;
+                //return new Response($errorsString);
+            }else{
+                $dm = $this->get('doctrine_mongodb')->getManager();
+                $dm->persist($user);
+                $dm->flush();
+                return $this->redirectToRoute('users');
+            }
         }
 
         return $this->render('usersAddForm.html.twig', array(

@@ -1,0 +1,28 @@
+# config/validator/validation.yaml
+
+App\Document\User:
+    properties:
+        userFirstName:
+            - NotBlank: ~
+            - Length:
+                min: 10
+        userLastName:
+            - NotBlank: ~
+            - Length:
+                min: 10
+        userEmail:
+            - NotBlank: ~            
+        userMobileNumber:
+            - NotBlank: ~            
+        userDateofBirth:
+            - NotBlank: ~
+        userEducation:
+            - NotBlank: ~
+        userBloodGroup:
+            - NotBlank: ~
+            - Length:
+                max: 10
+        userGender:
+            - NotBlank: ~
+            - Length:
+                min: 4
