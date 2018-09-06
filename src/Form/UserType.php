@@ -29,13 +29,6 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $educationArray = [
-            'UG College' => 'UG College',
-            'PG College' => 'PG College',
-            'Masters College' => 'Masters College',
-            'Others College' => 'Others College',
-        ];
-
         $builder
             ->add('userFirstName', TextType::class, array(
                 'attr' => array('class' => 'form-control')
@@ -67,7 +60,7 @@ class UserType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 
             ))
-            ->add('userEducation', CollectionType::class, 
+            ->add('userEducationOthers', CollectionType::class, 
             [
                 'entry_type' => TextType::class,
                 'allow_add'  => true,
@@ -80,6 +73,15 @@ class UserType extends AbstractType
                 'attr' => array('class' => 'form-control')
             ))
             ->add('userGender', TextType::class, array(
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('userSchoolStudies', TextType::class, array(
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('userUGStudies', TextType::class, array(
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('userPGStudies', TextType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
         ;
