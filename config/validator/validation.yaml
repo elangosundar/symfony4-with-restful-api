@@ -16,7 +16,19 @@ App\Document\User:
             - NotBlank: ~            
         userDateofBirth:
             - NotBlank: ~
-        userEducation:
+        userSchoolStudies:
+            - NotBlank: ~
+            - Length:
+                max: 20
+        userUGStudies:
+            - NotBlank: ~
+            - Length:
+                max: 20
+        userPGStudies:
+            - NotBlank: ~
+            - Length:
+                max: 20
+        userEducationOthers:
             - NotBlank: ~
         userBloodGroup:
             - NotBlank: ~

@@ -67,7 +67,10 @@
                                     {% endfor %}
                                 </td>
                                 <td>
-                                    {% for usrEdu in user.userEducation %}
+                                    {{ user.userSchoolStudies }}
+                                    {{ user.userUGStudies }}
+                                    {{ user.userPGStudies }}
+                                    {% for usrEdu in user.userEducationOthers %}
                                        <p>{{ usrEdu }}</p>
                                     {% endfor %}
                                 </td>

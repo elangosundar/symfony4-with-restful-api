@@ -43,13 +43,10 @@ class UserController extends Controller
     {
         $user = new User();
         $form = $this->createForm(UserType::Class,$user);   
-        //$form->remove('userLastName');
         
         $form->handleRequest($request);
-//echo "new user form loops";
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $user = $form->getData();
-echo "<pre>";print_R($user);exit;            
             $errors = $validator->validate($user);
             if (count($errors) > 0) {    
                 $errorsString = (string) $errors;
