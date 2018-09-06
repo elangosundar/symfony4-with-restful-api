@@ -37,8 +37,6 @@ class UserType extends AbstractType
         ];
 
         $builder
-            ->setAction('new')
-            ->setMethod('POST')
             ->add('userFirstName', TextType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
@@ -56,11 +54,11 @@ class UserType extends AbstractType
             ])
             ->add('userMobileNumber', CollectionType::class, 
             [
-                'entry_type' => EmailType::class,
+                'entry_type' => IntegerType::class,
                 'allow_add'  => true,
                 'allow_delete'  => true,
                 'entry_options' => array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'mobile-box form-control'),
                 ),
             ])
             ->add('userDateofBirth', DateType::class, array(
@@ -71,11 +69,11 @@ class UserType extends AbstractType
             ))
             ->add('userEducation', CollectionType::class, 
             [
-                'entry_type' => EmailType::class,
+                'entry_type' => TextType::class,
                 'allow_add'  => true,
                 'allow_delete'  => true,
                 'entry_options' => array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'edu-box form-control'),
                 ),
             ])
             ->add('userBloodGroup', TextType::class, array(
@@ -93,5 +91,4 @@ class UserType extends AbstractType
             'data_class' => User::class,
         ));
     }
-
 }

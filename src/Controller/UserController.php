@@ -28,7 +28,7 @@ class UserController extends Controller
     
     public function index()
     {
-       echo "Rest API call...!";
+       echo "Deafult Users call...!";
     }
 
     /**
@@ -46,13 +46,13 @@ class UserController extends Controller
         //$form->remove('userLastName');
         
         $form->handleRequest($request);
-
+//echo "new user form loops";
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+echo "<pre>";print_R($user);exit;            
             $errors = $validator->validate($user);
             if (count($errors) > 0) {    
                 $errorsString = (string) $errors;
-                //return new Response($errorsString);
             }else{
                 $dm = $this->get('doctrine_mongodb')->getManager();
                 $dm->persist($user);
@@ -61,6 +61,31 @@ class UserController extends Controller
             }
         }
 
+        return $this->render('usersAddForm.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Matches /users/edit/{id}
+     *
+     * @Route("/users/edit/{id}")
+     * @Method("GET")
+     * Method will used for editing the user
+     */
+
+    public function editUserAction($id, Request $request)
+    {
+        $user = new User();
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $repository = $dm->getRepository(User::class);
+        $users = $repository->findBy(['id' => $id]);
+        $form = $this->createForm(UserType::class, $users[0]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) { 
+            $dm->flush();
+            return $this->redirectToRoute('users');
+        }
         return $this->render('usersAddForm.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -86,109 +111,13 @@ class UserController extends Controller
         $pagination = $paginator->paginate(
             $dm->getRepository(User::class)->findAll(), //query
             $request->query->getInt('page', 1), //default page
-            2 //limit per page
+            6 //limit per page
         );
 
         return $this->render('users.html.twig', array(
             "userlist" => $pagination,
             "pagination" => $pagination
         ));
-    }
-
-    /**
-     * Matches /users/edit/{id}
-     *
-     * @Route("/users/edit/{id}")
-     * @Method("GET")
-     * Method will used for editing the user
-     */
-
-    public function editUserAction(string $id=null, Request $request)
-    {
-        $user = new User();
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repository = $dm->getRepository(User::class);
-
-        $educationArray = [            
-            'UG College' => 'UG College',
-            'PG College' => 'PG College',
-            'Masters College' => 'Masters College',
-            'Others College' => 'Others College',
-        ];
-
-        if($id != null) {
-            $users = $repository->findBy(['id' => $id]);
-            $users = $users[0]; 
-        
-            $userEmailString  = implode(",",$users->getUserEmail());
-            $userMobileString = implode(",",$users->getUserMobileNumber());
-            $this->userEduArray = $users->getUserEducation();
-
-            $form = $this->createFormBuilder($user)
-                ->add('userFirstName', TextType::class, array(
-                    'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control'), 'data' => $users->getUserFirstName()
-                ))
-                ->add('userLastName', TextType::class, array(
-                    'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control'), 'data' => $users->getUserLastName()
-                ))
-                ->add('userEmail', TextType::class, array(
-                    'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control'), 'data' => $userEmailString
-                ))
-                ->add('userMobileNumber', TextType::class, array(
-                    'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control'), 'data' => $userMobileString
-                ))
-                ->add('userDateofBirth', TextType::class, array(
-                    'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control'), 'data' => $users->getUserDateofBirth()
-                ))
-                ->add('userEducation',ChoiceType::class,array(
-                    'choices' => $educationArray,
-                    'choice_attr' => function($educationArray, $key, $value) {
-                        $selectVal = "";
-                        if(in_array($key, $this->userEduArray)){
-                            $selectVal = "selected";
-                        }
-                        return ['selected' => $selectVal];
-                    },
-                    'multiple' => true, 'attr' => array('class' => 'form-control'), 
-                ))
-                ->add('userBloodGroup', TextType::class, array(
-                    'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control'), 'data' => $users->getUserBloodGroup()
-                ))
-                ->add('userGender', TextType::class, array(
-                    'constraints' => new NotBlank(), 'attr' => array('class' => 'form-control'), 'data' => $users->getUserGender()
-                ))
-                ->add('id', HiddenType::class, array(
-                    'data' => $id,
-                ))
-                ->getForm();
-
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
-
-                $dm = $this->get('doctrine_mongodb')->getManager();
-                $user = $dm->getRepository(User::class)->find($data->getId());
-
-                $userEmailArray  = explode(",",$data->getUserEmail());
-                $userMobileArray = explode(",",$data->getUserMobileNumber());
-
-                $user->setUserFirstName($data->getUserFirstName());
-                $user->setUserLastName($data->getUserLastName());
-                $user->setUserEmail($userEmailArray);
-                $user->setUserMobileNumber($userMobileArray);
-                $user->setUserDateofBirth($data->getUserDateofBirth());
-                $user->setUserEducation($data->getUserEducation());
-                $user->setUserBloodGroup($data->getUserBloodGroup());
-                $user->setUserGender($data->getUserGender());
-                $dm->flush();
-
-                return $this->redirectToRoute('users');
-            }
-        }
-
-        return $this->render('usersEditForm.html.twig', array(
-            'form' => $form->createView(),
-        ));     
     }
 
     /**

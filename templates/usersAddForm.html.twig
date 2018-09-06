@@ -32,7 +32,7 @@
             <div id="content">
                 <div class="table-responsive">
                     {% block body %}
-
+                    {{ form_start(form) }}
                     <div class="form-group row">
                         <div class="col-md-2">
                         {{ form_label(form.userFirstName) }}
@@ -84,7 +84,8 @@
                         </div>
                         <div class="col-md-7">
                             <ul id="email-fields-list"
-                                data-prototype="{{ form_widget(form.userEmail.vars.prototype)|e }}">
+                                data-prototype="{{ form_widget(form.userEmail.vars.prototype)|e }}"
+                                data-widget-tags="{{ '<li></li>'|e }}">
                                 {% for emailField in form.userEmail %}
                                     <li>
                                         {{ form_errors(emailField) }}
@@ -92,25 +93,26 @@
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <a href="#" id="add-another-email" class="btn btn-success btn-md">Add Email</a>
+                            <a href="#" data-list="#email-fields-list" id="add-another-email" class="add-another-collection-widget btn btn-success btn-md">Add Email</a>
                         </div>
                     </div>
                     
-                   <div class="form-group row">
+                    <div class="form-group row">
                         <div class="col-md-2">
                         {{ form_label(form.userMobileNumber) }}
                         </div>
                         <div class="col-md-7">
                             <ul id="mobile-fields-list"
-                                data-prototype="{{ form_widget(form.userMobileNumber.vars.prototype)|e }}">
-                                {% for emailField in form.userMobileNumber %}
+                                data-prototype="{{ form_widget(form.userMobileNumber.vars.prototype)|e }}"
+                                data-widget-tags="{{ '<li></li>'|e }}">
+                                {% for mobileField in form.userMobileNumber %}
                                     <li>
-                                        {{ form_errors(emailField) }}
-                                        {{ form_widget(emailField) }}
+                                        {{ form_errors(mobileField) }}
+                                        {{ form_widget(mobileField) }}
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <a href="#" id="add-another-mobile" class="btn btn-success btn-md">Add Mobile Number</a>
+                            <a href="#" data-list="#mobile-fields-list" id="add-another-mobile" class="add-another-collection-widget btn btn-success btn-md">Add Mobile Number</a>
                         </div>
                     </div>
                     
@@ -120,68 +122,28 @@
                         </div>
                         <div class="col-md-7">
                             <ul id="edu-fields-list"
-                                data-prototype="{{ form_widget(form.userEducation.vars.prototype)|e }}">
-                                {% for emailField in form.userEducation %}
+                                data-prototype="{{ form_widget(form.userEducation.vars.prototype)|e }}"
+                                data-widget-tags="{{ '<li></li>'|e }}">
+                                {% for eduField in form.userEducation %}
                                     <li>
-                                        {{ form_errors(emailField) }}
-                                        {{ form_widget(emailField) }}
+                                        {{ form_errors(eduField) }}
+                                        {{ form_widget(eduField) }}
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <a href="#" id="add-another-edu" class="btn btn-success btn-md">Add Education</a>
+                            <a href="#" data-list="#edu-fields-list" id="add-another-edu" class="add-another-collection-widget btn btn-success btn-md">Add Education</a>
                         </div>
-                    </div>               
+                    </div>
 
                     <div class="col-md-12">
                         <input type="submit" class="btn btn-primary" /> 
-                    </div>   
+                    </div>  
                     {% endblock %}
                 </div>
             </div>
         </div>
+        {% block javascripts %}
+            <script src="{{ asset('js/userform.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
-<script type="text/javascript">
-    var emailCount  = '{{ form.userEmail|length }}';
-    var mobileCount = '{{ form.userMobileNumber|length }}';
-    var eduCount    = '{{ form.userEducation|length }}';
-
-    jQuery(document).ready(function() {
-        jQuery('#add-another-email').click(function(e) {
-            e.preventDefault();
-
-            var emailList = jQuery('#email-fields-list');
-
-            var newWidget = emailList.attr('data-prototype');
-            newWidget = newWidget.replace(/__name__/g, emailCount);
-            emailCount++;
-
-            var newLi = jQuery('<li></li>').html(newWidget);
-            newLi.appendTo(emailList);
-        });
-        jQuery('#add-another-mobile').click(function(e) {
-            e.preventDefault();
-
-            var mobileList = jQuery('#mobile-fields-list');
-
-            var newWidget = mobileList.attr('data-prototype');
-            newWidget = newWidget.replace(/__name__/g, mobileCount);
-            mobileCount++;
-
-            var newLi = jQuery('<li></li>').html(newWidget);
-            newLi.appendTo(mobileList);
-        });
-        jQuery('#add-another-edu').click(function(e) {
-            e.preventDefault();
-
-            var eduList = jQuery('#edu-fields-list');
-
-            var newWidget = eduList.attr('data-prototype');
-            newWidget = newWidget.replace(/__name__/g, eduCount);
-            eduCount++;
-
-            var newLi = jQuery('<li></li>').html(newWidget);
-            newLi.appendTo(eduList);
-        });
-    });
-</script>
