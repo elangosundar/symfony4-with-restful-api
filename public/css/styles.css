@@ -31,6 +31,21 @@ li {
     padding-left:198px;
 }
 
-.remove_field{
-    margin-left:10px;
+.remove-tag{
+    margin-left: 10px;
+}
+
+.email-box  {
+    width: 85% !important;
+    display: inline-block !important;
+}
+
+.mobile-box  {
+    width: 85% !important;
+    display: inline-block !important;
+}
+
+.edu-box  {
+    width: 85% !important;
+    display: inline-block !important;
 }
