@@ -60,11 +60,12 @@ class UserType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 
             ))
-            ->add('userEducationOthers', CollectionType::class, 
+            ->add('userEducation', CollectionType::class,
             [
                 'entry_type' => TextType::class,
                 'allow_add'  => true,
                 'allow_delete'  => true,
+                'prototype'     => true,
                 'entry_options' => array(
                     'attr' => array('class' => 'edu-box form-control'),
                 ),
@@ -73,15 +74,6 @@ class UserType extends AbstractType
                 'attr' => array('class' => 'form-control')
             ))
             ->add('userGender', TextType::class, array(
-                'attr' => array('class' => 'form-control')
-            ))
-            ->add('userSchoolStudies', TextType::class, array(
-                'attr' => array('class' => 'form-control')
-            ))
-            ->add('userUGStudies', TextType::class, array(
-                'attr' => array('class' => 'form-control')
-            ))
-            ->add('userPGStudies', TextType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
         ;
