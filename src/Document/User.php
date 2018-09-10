@@ -50,7 +50,7 @@ class User
     /**
      * @MongoDB\Field(type="hash")
      */
-    protected $userEducationOthers;
+    protected $userEducation;
 
     /**
      * @MongoDB\Field(type="string")
@@ -62,21 +62,6 @@ class User
      */
     protected $userGender;
     
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $userSchoolStudies;
-    
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $userUGStudies;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $userPGStudies;
-
     /**
      * @MongoDB\Field(type="date")
      */
@@ -142,14 +127,14 @@ class User
         return $this->userDateofBirth;
     }
 
-    public function setUserEducationOthers($userEducationOthers)
+    public function setUserEducation($userEducation)
     {
-        $this->userEducationOthers = $userEducationOthers;
+        $this->userEducation = $userEducation;
     }
 
-    public function getUserEducationOthers()
+    public function getUserEducation()
     {
-        return $this->userEducationOthers;
+        return $this->userEducation;
     }
 
     public function setUserBloodGroup($userBloodGroup)
@@ -170,35 +155,5 @@ class User
     public function getUserGender()
     {
         return $this->userGender;
-    }
-
-    public function setUserSchoolStudies($userSchoolStudies)
-    {
-        $this->userSchoolStudies = $userSchoolStudies;
-    }
-
-    public function getUserSchoolStudies()
-    {
-        return $this->userSchoolStudies;
-    }
-
-    public function setUserUGStudies($userUGStudies)
-    {
-        $this->userUGStudies = $userUGStudies;
-    }
-
-    public function getUserUGStudies()
-    {
-        return $this->userUGStudies;
-    }
-
-    public function setUserPGStudies($userPGStudies)
-    {
-        $this->userPGStudies = $userPGStudies;
-    }
-
-    public function getUserPGStudies()
-    {
-        return $this->userPGStudies;
     }
 }

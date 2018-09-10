@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 use App\Form\UserType;
+use App\Form\EducationType;
 
 class UserController extends Controller
 {
@@ -47,7 +48,9 @@ class UserController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $user = $form->getData();
+//echo "<pre>";print_R($user);exit;
             $errors = $validator->validate($user);
+//echo "count===>".$errors;exit;            
             if (count($errors) > 0) {    
                 $errorsString = (string) $errors;
             }else{
